@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İyi ki Doğdun Nida! ✨</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --bordo-derin: #140005;
+            --bordo-koyu: #240009;
+            --bordo-orta: #500a1b;
+            --bordo-acik: #7a142c;
+            --bordo-parlak: #a31c3b;
+            --kirmizi-zambak: #d91b42;
+            --altin: #d4af37;
+            --altin-parlak: #f6e29c;
+            --altin-koyu: #9a7b1c;
+            --yazi-acik: #fdfbf7;
+            --yazi-soluk: #e4d5cf;
+            --kart-bg: rgba(60, 8, 20, 0.72);
+            --kart-border: rgba(212, 175, 55, 0.28);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bordo-derin);
+            background-image: 
+                radial-gradient(circle at 15% 20%, rgba(122, 20, 44, 0.35) 0%, transparent 45%),
+                radial-gradient(circle at 85% 75%, rgba(163, 28, 59, 0.28) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(36, 0, 9, 0.8) 0%, var(--bordo-derin) 100%);
+            color: var(--yazi-acik);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        /* Canvas Particle Arka Planı */
+        #particle-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .main-wrapper {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header / Hero Section */
+        header {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 80px 20px 40px;
+            background: radial-gradient(ellipse at center, rgba(122, 20, 44, 0.45) 0%, rgba(20, 0, 5, 0.95) 80%);
+            border-bottom: 2px solid var(--altin);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .badge-tarih {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: rgba(212, 175, 55, 0.12);
+            border: 1px solid var(--altin);
+            border-radius: 30px;
+            color: var(--altin-parlak);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.2);
+            animation: pulseGlow 3s infinite ease-in-out;
+        }
+
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
+            50% { box-shadow: 0 0 25px rgba(212, 175, 55, 0.45); }
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.8rem, 7vw, 5.2rem);
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 10%, var(--altin-parlak) 50%, var(--altin) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+            line-height: 1.15;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+            font-style: italic;
+            color: var(--yazi-soluk);
+            max-width: 650px;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .btn-luks {
+            background: linear-gradient(135deg, var(--bordo-orta), var(--bordo-acik));
+            border: 1px solid var(--altin);
+            color: var(--altin-parlak);
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .btn-luks:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35);
+            background: linear-gradient(135deg, var(--altin), var(--altin-koyu));
+            color: var(--bordo-derin);
+            border-color: #fff;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Bölüm Başlıkları */
+        .bolum-baslik {
+            text-align: center;
+            margin-bottom: 45px;
+            position: relative;
+        }
+
+        .bolum-baslik h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            color: var(--altin);
+            margin-bottom: 10px;
+        }
+
+        .bolum-baslik p {
+            color: var(--yazi-soluk);
+            font-size: 1.05rem;
+            font-style: italic;
+        }
+
+        .bolum-cizgi {
+            width: 70px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, var(--altin), transparent);
+            margin: 15px auto 0;
+        }
+
+        /* Sayaç Bölümü */
+        .sayaclar-alani {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 70px;
+        }
+
+        .sayac-karti {
+            background: var(--kart-bg);
+            border: 1px solid var(--kart-border);
+            border-radius: 16px;
+            padding: 30px 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .sayac-karti:hover {
+            transform: translateY(-4px);
+            border-color: var(--altin);
+        }
+
+        .sayac-karti::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--altin), transparent);
+        }
+
+        .sayac-baslik {
+            font-family: 'Playfair Display', serif;
+            color: var(--altin-parlak);
+            font-size: 1.35rem;
+            margin-bottom: 8px;
+        }
+
+        .sayac-aciklama {
+            font-size: 0.88rem;
+            color: var(--yazi-soluk);
+            margin-bottom: 22px;
+            opacity: 0.85;
+        }
+
+        .sayac-izgara {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .sayac-kutu {
+            background: rgba(20, 0, 5, 0.6);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 10px;
+            padding: 12px 5px;
+        }
+
+        .sayac-rakam {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.85rem;
+            font-weight: 700;
+            color: #fff;
+            display: block;
+            line-height: 1;
+        }
+
+        .sayac-etiket {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--altin);
+            margin-top: 5px;
+            display: block;
+        }
+
+        /* Grid Özellik Kartları */
+        .grid-katalog {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+            margin-bottom: 70px;
+        }
+
+        .kart {
+            background: var(--kart-bg);
+            border: 1px solid var(--kart-border);
+            border-radius: 16px;
+            padding: 30px 22px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.35s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.35);
+        }
+
+        .kart:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.2);
+            border-color: var(--altin);
+        }
+
+        .kart-ikon {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
+            transition: transform 0.3s ease;
+        }
+
+        .kart:hover .kart-ikon {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .kart h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--altin);
+            font-size: 1.35rem;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+            padding-bottom: 12px;
+            margin-bottom: 14px;
+        }
+
+        .kart p {
+            font-size: 0.95rem;
+            color: var(--yazi-soluk);
+            line-height: 1.65;
+        }
+
+        /* İnteraktif Pasta & Mum Bölümü */
+        .pasta-bolumu {
+            background: linear-gradient(135deg, rgba(60, 8, 20, 0.85), rgba(30, 2, 8, 0.95));
+            border: 1px solid var(--altin);
+            border-radius: 20px;
+            padding: 45px 30px;
+            text-align: center;
+            margin-bottom: 70px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        .pasta-sahnesi {
+            margin: 30px auto;
+            position: relative;
+            width: 180px;
+            height: 160px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        /* Pasta Çizimi (CSS) */
+        .pasta-taban {
+            position: absolute;
+            bottom: 0;
+            left: 10px;
+            width: 160px;
+            height: 60px;
+            background: linear-gradient(to right, #400412, #7a142c, #400412);
+            border-radius: 12px 12px 20px 20px;
+            border: 2px solid var(--altin);
+            box-shadow: inset 0 -10px 15px rgba(0,0,0,0.5);
+        }
+
+        .pasta-kat {
+            position: absolute;
+            bottom: 50px;
+            left: 30px;
+            width: 120px;
+            height: 50px;
+            background: linear-gradient(to right, #500a1b, #961b36, #500a1b);
+            border-radius: 10px;
+            border: 2px solid var(--altin-parlak);
+        }
+
+        .krema-dalga {
+            position: absolute;
+            top: -6px;
+            left: 0;
+            width: 100%;
+            height: 14px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+        }
+
+        .mum {
+            position: absolute;
+            bottom: 98px;
+            left: 82px;
+            width: 14px;
+            height: 45px;
+            background: repeating-linear-gradient(45deg, #fff, #fff 5px, var(--altin) 5px, var(--altin) 10px);
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
+        }
+
+        .fitil {
+            position: absolute;
+            top: -8px;
+            left: 5px;
+            width: 3px;
+            height: 8px;
+            background: #222;
+        }
+
+        .alev {
+            position: absolute;
+            top: -24px;
+            left: -3px;
+            width: 20px;
+            height: 26px;
+            background: radial-gradient(ellipse at bottom, #fff 0%, #ffdf60 30%, #ff5e00 70%, transparent 95%);
+            border-radius: 50% 50% 35% 35% / 60% 60% 40% 40%;
+            box-shadow: 0 0 20px #ffaa00, 0 0 35px #ff5500;
+            animation: alevTitre 1s infinite alternate ease-in-out;
+            transform-origin: center bottom;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        @keyframes alevTitre {
+            0% { transform: scale(1) rotate(-2deg); }
+            50% { transform: scale(1.06) rotate(3deg); }
+            100% { transform: scale(0.96) rotate(-1deg); }
+        }
+
+        .alev.sondu {
+            opacity: 0;
+            transform: scale(0.1) translateY(-10px);
+        }
+
+        .duman {
+            position: absolute;
+            top: -30px;
+            left: 2px;
+            width: 8px;
+            height: 18px;
+            background: rgba(200, 200, 200, 0.6);
+            border-radius: 10px;
+            filter: blur(2px);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .duman.tutuyor {
+            animation: dumanCikis 1.8s forwards ease-out;
+        }
+
+        @keyframes dumanCikis {
+            0% { opacity: 0.8; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-40px) scale(2.5) rotate(15deg); }
+        }
+
+        .pasta-mesaj {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.25rem;
+            color: var(--altin-parlak);
+            margin-top: 15px;
+            min-height: 32px;
+            transition: all 0.3s;
+        }
+
+        .pasta-ipucu {
+            font-size: 0.88rem;
+            color: var(--yazi-soluk);
+            opacity: 0.8;
+            margin-top: 8px;
+        }
+
+        /* Polaroid Fotoğraf Galerisi */
+        .polaroid-galeri {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+            margin-bottom: 70px;
+            padding: 10px;
+        }
+
+        .polaroid-kutu {
+            background: #fdfaf6;
+            padding: 14px 14px 22px 14px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(212, 175, 55, 0.2);
+            transition: all 0.35s ease;
+            position: relative;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .polaroid-kutu:nth-child(1) { transform: rotate(-2.5deg); }
+        .polaroid-kutu:nth-child(2) { transform: rotate(2deg); }
+        .polaroid-kutu:nth-child(3) { transform: rotate(-1.5deg); }
+        .polaroid-kutu:nth-child(4) { transform: rotate(3deg); }
+
+        .polaroid-kutu:hover {
+            transform: scale(1.06) rotate(0deg) !important;
+            z-index: 10;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .polaroid-resim-alani {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #1e0007;
+            border-radius: 2px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .polaroid-resim-alani img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .polaroid-kutu:hover .polaroid-resim-alani img {
+            transform: scale(1.08);
+        }
+
+        .polaroid-overlay-btn {
+            position: absolute;
+            inset: 0;
+            background: rgba(36, 0, 9, 0.75);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--altin-parlak);
+            font-size: 0.85rem;
+            font-weight: 600;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(4px);
+            border-radius: 2px;
+            gap: 6px;
+        }
+
+        .polaroid-kutu:hover .polaroid-overlay-btn {
+            opacity: 1;
+        }
+
+        .polaroid-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--altin-parlak);
+            text-align: center;
+            padding: 15px;
+        }
+
+        .polaroid-placeholder span {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+
+        .polaroid-placeholder small {
+            font-size: 0.8rem;
+            color: var(--yazi-soluk);
+            opacity: 0.85;
+        }
+
+        .polaroid-yazi {
+            font-family: 'Alex Brush', cursive;
+            font-size: 1.6rem;
+            color: #2b000a;
+            margin-top: 14px;
+            display: block;
+        }
+
+        /* 3D İnteraktif Zarf & Mektup Bölümü */
+        .mektup-alani {
+            margin: 70px auto;
+            text-align: center;
+            max-width: 850px;
+        }
+
+        .zarf-konteyner {
+            perspective: 1000px;
+            margin: 30px auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .zarf-sarma {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            background: #3f0714;
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            cursor: pointer;
+            border: 1px solid var(--altin);
+            transition: transform 0.4s ease;
+        }
+
+        .zarf-sarma:hover {
+            transform: translateY(-5px);
+        }
+
+        .zarf-kapak {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 115px solid #5a0c1e;
+            transform-origin: top center;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 4;
+        }
+
+        .zarf-sol {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-top: 110px solid transparent;
+            border-bottom: 110px solid transparent;
+            border-left: 160px solid #4a0918;
+            z-index: 3;
+            border-radius: 8px 0 0 8px;
+        }
+
+        .zarf-sag {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 0;
+            height: 0;
+            border-top: 110px solid transparent;
+            border-bottom: 110px solid transparent;
+            border-right: 160px solid #450816;
+            z-index: 3;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .zarf-alt {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-bottom: 125px solid #380512;
+            z-index: 3;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .muhur {
+            position: absolute;
+            top: 95px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, #f3e5ab 0%, var(--altin) 60%, var(--altin-koyu) 100%);
+            border-radius: 50%;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #2b000a;
+            font-size: 1.25rem;
+            border: 2px dashed rgba(43, 0, 10, 0.4);
+            transition: transform 0.3s, opacity 0.4s;
+        }
+
+        .zarf-sarma:hover .muhur {
+            transform: translateX(-50%) scale(1.1);
+        }
+
+        /* Zarf Açılma Durumu */
+        .zarf-sarma.acik .zarf-kapak {
+            transform: rotateX(180deg);
+            z-index: 1;
+        }
+
+        .zarf-sarma.acik .muhur {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .zarf-mektup-onizleme {
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            width: 280px;
+            height: 180px;
+            background: #fffdf9;
+            border-radius: 6px;
+            z-index: 2;
+            transition: transform 0.6s 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.2);
+            padding: 15px;
+            color: #2b000a;
+            font-family: 'Alex Brush', cursive;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .zarf-sarma.acik .zarf-mektup-onizleme {
+            transform: translateY(-110px);
+            z-index: 4;
+        }
+
+        /* Açılan Mektup Modal / Tam Okuma Alanı */
+        .mektup-kagit {
+            background: linear-gradient(to bottom, #fffdf8 0%, #f7f1e5 100%);
+            color: #2b000a;
+            border-radius: 16px;
+            padding: 50px 40px;
+            margin-top: 35px;
+            border: 2px solid var(--altin);
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6), inset 0 0 60px rgba(212, 175, 55, 0.15);
+            position: relative;
+            text-align: left;
+            line-height: 2;
+            font-size: 1.12rem;
+            display: none;
+            animation: fadeInLetter 0.8s ease forwards;
+        }
+
+        .mektup-kagit.gorunur {
+            display: block;
+        }
+
+        @keyframes fadeInLetter {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mektup-kagit::before {
+            content: '🌸';
+            position: absolute;
+            top: 15px;
+            right: 25px;
+            font-size: 1.8rem;
+            opacity: 0.6;
+        }
+
+        .mektup-kagit h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #5c0f1f;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(92, 15, 31, 0.2);
+            padding-bottom: 10px;
+        }
+
+        .mektup-kagit p {
+            margin-bottom: 16px;
+            color: #38020d;
+        }
+
+        .mektup-imza {
+            font-family: 'Alex Brush', cursive;
+            font-size: 2.2rem;
+            color: #5c0f1f;
+            text-align: right;
+            margin-top: 30px;
+        }
+
+        /* Müzik Kutusu & Vinil Çalar */
+        .muzik-kutusu {
+            background: linear-gradient(135deg, rgba(60, 8, 20, 0.9), rgba(25, 1, 6, 0.95));
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 60px;
+            border: 1px solid var(--altin);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .plak-alani {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 10px 0;
+        }
+
+        .vinil-plak {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, #2a2a2a 0%, #111 40%, #2a2a2a 50%, #000 100%);
+            border-radius: 50%;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: plakDon 8s linear infinite;
+            animation-play-state: paused;
+            border: 2px solid #333;
+        }
+
+        .vinil-plak.caliyor {
+            animation-play-state: running;
+        }
+
+        @keyframes plakDon {
+            100% { transform: rotate(360deg); }
+        }
+
+        .plak-gobek {
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, var(--altin-parlak) 0%, var(--bordo-orta) 80%);
+            border-radius: 50%;
+            border: 3px solid #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        /* Ses Dalgaları Animasyonu */
+        .ses-dalgalari {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            height: 25px;
+            margin-top: 5px;
+        }
+
+        .dalga-cubuk {
+            width: 4px;
+            height: 6px;
+            background: var(--altin);
+            border-radius: 2px;
+            transition: height 0.2s;
+        }
+
+        .caliyor .dalga-cubuk:nth-child(1) { animation: dalga 1s infinite 0.1s; }
+        .caliyor .dalga-cubuk:nth-child(2) { animation: dalga 1s infinite 0.3s; }
+        .caliyor .dalga-cubuk:nth-child(3) { animation: dalga 1s infinite 0.5s; }
+        .caliyor .dalga-cubuk:nth-child(4) { animation: dalga 1s infinite 0.2s; }
+        .caliyor .dalga-cubuk:nth-child(5) { animation: dalga 1s infinite 0.4s; }
+
+        @keyframes dalga {
+            0%, 100% { height: 6px; }
+            50% { height: 24px; }
+        }
+
+        .sarki-bilgi h4 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--altin);
+            margin-bottom: 5px;
+        }
+
+        .sarki-bilgi p {
+            color: var(--yazi-soluk);
+            font-size: 0.95rem;
+        }
+
+        .muzik-butonlari {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .btn-oynat {
+            background: linear-gradient(135deg, var(--altin), var(--altin-koyu));
+            color: var(--bordo-derin);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            transition: transform 0.2s;
+        }
+
+        .btn-oynat:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-harici-link {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            color: var(--yazi-acik);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-harici-link:hover {
+            background: rgba(212, 175, 55, 0.2);
+            border-color: var(--altin);
+            color: var(--altin-parlak);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 45px 20px;
+            background-color: #0d0003;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+            font-size: 0.95rem;
+            color: var(--yazi-soluk);
+            margin-top: 80px;
+        }
+
+        footer .kalp {
+            color: #d91b42;
+            display: inline-block;
+            animation: kalpAtis 1.2s infinite ease-in-out;
+        }
+
+        @keyframes kalpAtis {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+        }
+
+        /* Floating Ses Açma/Kısma Butonu */
+        .floating-audio-ctrl {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 48px;
+            height: 48px;
+            background: rgba(36, 0, 9, 0.85);
+            border: 1px solid var(--altin);
+            border-radius: 50%;
+            color: var(--altin-parlak);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s;
+        }
+
+        .floating-audio-ctrl:hover {
+            transform: scale(1.1);
+        }
+
+        /* Responsive Uyum */
+        @media (max-width: 768px) {
+            header {
+                padding: 60px 15px 30px;
+                min-height: auto;
+            }
+            .sayac-izgara {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 8px;
+            }
+            .sayac-rakam {
+                font-size: 1.5rem;
+            }
+            .mektup-kagit {
+                padding: 30px 20px;
+            }
+            .zarf-sarma {
+                width: 290px;
+                height: 200px;
+            }
+            .zarf-kapak {
+                border-left-width: 145px;
+                border-right-width: 145px;
+            }
+            .zarf-sol { border-left-width: 145px; }
+            .zarf-sag { border-right-width: 145px; }
+            .zarf-alt {
+                border-left-width: 145px;
+                border-right-width: 145px;
+            }
+            .zarf-mektup-onizleme {
+                width: 250px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Kar ve Kırmızı Zambak Parçacık Animasyon Canvas'ı -->
+    <canvas id="particle-canvas"></canvas>
+
+    <div class="main-wrapper">
+
+        <!-- Header / Giriş Bölümü -->
+        <header>
+            <div class="badge-tarih">
+                <span>❄️</span>
+                <span>27 KASIM • KIŞIN EN GÜZEL DETAYI</span>
+                <span>❄️</span>
+            </div>
+            <h1>Mutlu Yıllar Nida!</h1>
+            <p class="hero-subtitle">
+                Zarafetin, enerjin ve kalbinle etrafındaki her yeri aydınlatan özel ruh... Doğum günün kutlu olsun.
+            </p>
+            <div class="hero-buttons">
+                <a href="#mektup" class="btn-luks">
+                    <span>💌 Mektubunu Oku</span>
+                </a>
+                <a href="#pasta" class="btn-luks">
+                    <span>🎂 Mum Üfle & Dilek Tut</span>
+                </a>
+                <a href="#muzik" class="btn-luks">
+                    <span>🎵 Şarkını Dinle</span>
+                </a>
+            </div>
+        </header>
+
+        <div class="container">
+            
+            <!-- Canlı Sayaçlar (31 Ağustos'tan Beri & 27 Kasım Doğum Günü) -->
+            <div class="sayaclar-alani">
+                <!-- 31 Ağustos'tan bugüne geçen süre -->
+                <div class="sayac-karti">
+                    <h3 class="sayac-baslik">31 Ağustos'tan Bugüne</h3>
+                    <p class="sayac-aciklama">Bu güzel hikayenin başladığı o ilk andan beri...</p>
+                    <div class="sayac-izgara">
+                        <div class="sayac-kutu">
+                            <span class="sayac-rakam" id="gecen-gun">--</span>
+                            <span class="sayac-etiket">Gün</span>
+                        </div>
+                        <div class="sayac-kutu">
+                            <span class="sayac-rakam" id="gecen-saat">--</span>
+                            <span class="sayac-etiket">Saat</span>
+                        </div>
+                        <div class="sayac-kutu">
+                            <span class="sayac-rakam" id="gecen-dakika">--</span>
+                            <span class="sayac-etiket">Dakika</span>
+                        </div>
+                        <div class="sayac-kutu">
+                            <span class="sayac-rakam" id="gecen-saniye">--</span>
+                            <span class="sayac-etiket">Saniye</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 27 Kasım Doğum Günü Geri Sayımı -->
+                <div class="sayac-karti">
+                    <h3 class="sayac-baslik">27 Kasım Doğum Günü</h3>
+                    <p class="sayac-aciklama" id="dogum-gunu-durum">Yeni yaşının getireceği güzelliklere kalan zaman:</p>
+                    <div class="sayac-izgara">
+                        <div class="sayac-kutu">
+                            <span class="sayac-rakam" id="kalan-gun">--</span>
+                            <span class="sayac-etiket">Gün</span>
+                        </div>
+                        <div class="sayac-kutu">
+                            <span class="sayac-rakam" id="kalan-saat">--</span>
+                            <span class="sayac-etiket">Saat</span>
+                        </div>
+                        <div class="sayac-kutu">
+                            <span class="sayac-rakam" id="kalan-dakika">--</span>
+                            <span class="sayac-etiket">Dakika</span>
+                        </div>
+                        <div class="sayac-kutu">
+                            <span class="sayac-rakam" id="kalan-saniye">--</span>
+                            <span class="sayac-etiket">Saniye</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Karakter & Estetik Kartları -->
+            <div class="bolum-baslik">
+                <h2>Nida'nın Dünyası</h2>
+                <p>Seni sen yapan o eşsiz, güçlü ve sıcacık özellikler</p>
+                <div class="bolum-cizgi"></div>
+            </div>
+
+            <div class="grid-katalog">
+                <div class="kart">
+                    <div class="kart-ikon">🧠✨</div>
+                    <h3>Karakter & Zihin</h3>
+                    <p>Bir ENFP olarak etrafına saçtığın tükenmeyen enerji, derin empati yeteneğin ve psikolojiye olan merakın seni benzersiz kılıyor.</p>
+                </div>
+                <div class="kart">
+                    <div class="kart-ikon">🩺🤍</div>
+                    <h3>Geleceğin Doktoru</h3>
+                    <p>O stetoskop boynuna çok ama çok yakışacak. Kararlılığın ve şefkatinle tıp yolunda harika bir hekim olacağına inancım tam.</p>
+                </div>
+                <div class="kart">
+                    <div class="kart-ikon">🌺🐾</div>
+                    <h3>Estetik Detaylar</h3>
+                    <p>Kırmızı örümcek zambağının gizemli zarafeti ve siyah panterin asil duruşu... Tam olarak senin ruhunu ve gücünü yansıtıyor.</p>
+                </div>
+                <div class="kart">
+                    <div class="kart-ikon">🍚🎧</div>
+                    <h3>Konfor Alanı</h3>
+                    <p>Vazgeçilmez tavuk pilav lezzeti, saatlerce süren Discord sohbetleri ve dışarıda soğuk kış varken içini ısıtan huzurlu anlar...</p>
+                </div>
+            </div>
+
+            <!-- İnteraktif Doğum Günü Pastası & Mum Üfleme -->
+            <div class="pasta-bolumu" id="pasta">
+                <div class="bolum-baslik" style="margin-bottom: 20px;">
+                    <h2>Dilek Zamanı</h2>
+                    <p>Gözlerini kapat, kalbinden en güzel dileğini geçir ve muma dokun!</p>
+                </div>
+
+                <div class="pasta-sahnesi" id="pasta-alani" onclick="mumuUfle()">
+                    <div class="pasta-taban"></div>
+                    <div class="pasta-kat">
+                        <div class="krema-dalga"></div>
+                    </div>
+                    <div class="mum">
+                        <div class="fitil"></div>
+                        <div class="alev" id="mum-alevi"></div>
+                        <div class="duman" id="mum-dumani"></div>
+                    </div>
+                </div>
+
+                <div class="pasta-mesaj" id="pasta-mesaj">🕯️ Muma tıklayarak söndür ve dileğini gökyüzüne bırak...</div>
+                <p class="pasta-ipucu">(Tıklayarak mumunu üfleyebilirsin!)</p>
+            </div>
+
+            <!-- Polaroid Fotoğraf / Anı Galerisi -->
+            <div class="bolum-baslik">
+                <h2>Özel Anılar & Estetik</h2>
+                <p>Zamanı durduran kareler ve unutulmaz hatıralar</p>
+                <div class="bolum-cizgi"></div>
+            </div>
+
+            <input type="file" id="polaroid-file-input" accept="image/*" style="display:none;" onchange="dosyaSecildi(event)">
+
+            <div class="polaroid-galeri">
+                <!-- Polaroid 1 -->
+                <div class="polaroid-kutu" onclick="polaroidTiklandi(1)" title="Fotoğraf eklemek veya değiştirmek için tıkla">
+                    <div class="polaroid-resim-alani" id="polaroid-resim-1">
+                        <div class="polaroid-placeholder" style="background: linear-gradient(135deg, #400412, #180005);">
+                            <span>🌺</span>
+                            <strong style="color:var(--altin-parlak)">Kırmızı Zambak</strong>
+                            <small>Zarafet & Tutku</small>
+                        </div>
+                        <div class="polaroid-overlay-btn">
+                            <span>📷</span>
+                            <span>Fotoğraf Ekle</span>
+                        </div>
+                    </div>
+                    <span class="polaroid-yazi">Kırmızı Örümcek Zambağı</span>
+                </div>
+
+                <!-- Polaroid 2 -->
+                <div class="polaroid-kutu" onclick="polaroidTiklandi(2)" title="Fotoğraf eklemek veya değiştirmek için tıkla">
+                    <div class="polaroid-resim-alani" id="polaroid-resim-2">
+                        <div class="polaroid-placeholder" style="background: linear-gradient(135deg, #1c1c1c, #0a0a0a);">
+                            <span>🐾</span>
+                            <strong style="color:var(--altin-parlak)">Asil Ruh</strong>
+                            <small>Siyah Panter Duruşu</small>
+                        </div>
+                        <div class="polaroid-overlay-btn">
+                            <span>📷</span>
+                            <span>Fotoğraf Ekle</span>
+                        </div>
+                    </div>
+                    <span class="polaroid-yazi">Siyah Panter Asaleti</span>
+                </div>
+
+                <!-- Polaroid 3 -->
+                <div class="polaroid-kutu" onclick="polaroidTiklandi(3)" title="Fotoğraf eklemek veya değiştirmek için tıkla">
+                    <div class="polaroid-resim-alani" id="polaroid-resim-3">
+                        <div class="polaroid-placeholder" style="background: linear-gradient(135deg, #2b000a, #4a0918);">
+                            <span>🩺</span>
+                            <strong style="color:var(--altin-parlak)">Dr. Nida</strong>
+                            <small>Geleceğin Şifası</small>
+                        </div>
+                        <div class="polaroid-overlay-btn">
+                            <span>📷</span>
+                            <span>Fotoğraf Ekle</span>
+                        </div>
+                    </div>
+                    <span class="polaroid-yazi">Geleceğin Doktoru</span>
+                </div>
+
+                <!-- Polaroid 4 -->
+                <div class="polaroid-kutu" onclick="polaroidTiklandi(4)" title="Fotoğraf eklemek veya değiştirmek için tıkla">
+                    <div class="polaroid-resim-alani" id="polaroid-resim-4">
+                        <div class="polaroid-placeholder" style="background: linear-gradient(135deg, #1f2937, #111827);">
+                            <span>💬❄️</span>
+                            <strong style="color:var(--altin-parlak)">Sıcak Sohbetler</strong>
+                            <small>Discord & Kış Akşamları</small>
+                        </div>
+                        <div class="polaroid-overlay-btn">
+                            <span>📷</span>
+                            <span>Fotoğraf Ekle</span>
+                        </div>
+                    </div>
+                    <span class="polaroid-yazi">31 Ağustos Hatırası</span>
+                </div>
+            </div>
+
+            <!-- İnteraktif Mühürlü Zarf & Mektup Bölümü -->
+            <div class="mektup-alani" id="mektup">
+                <div class="bolum-baslik">
+                    <h2>Sana Özel Bir Mektup</h2>
+                    <p>Altın mühre tıklayarak zarfı açabilirsin</p>
+                    <div class="bolum-cizgi"></div>
+                </div>
+
+                <div class="zarf-konteyner">
+                    <div class="zarf-sarma" id="zarf" onclick="zarfiAc()">
+                        <div class="zarf-kapak"></div>
+                        <div class="zarf-sol"></div>
+                        <div class="zarf-sag"></div>
+                        <div class="zarf-alt"></div>
+                        <div class="muhur" id="muhur">N</div>
+                        <div class="zarf-mektup-onizleme">
+                            <p>İyi ki Doğdun Nida...</p>
+                            <small style="color: #666; font-size: 0.85rem;">(Okumak için tıkla)</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Açılan Genişletilmiş Mektup Kağıdı -->
+                <div class="mektup-kagit" id="mektup-kagit">
+                    <h3>Sevgili Nida,</h3>
+                    <p>
+                        31 Ağustos'ta hayatıma dahil olduğun o günden beri, her sohbetimiz, paylaştığımız her an ve enerjin dünyamı çok daha anlamlı ve güzel bir yer haline getirdi.
+                    </p>
+                    <p>
+                        Bir ENFP olarak yaydığın o sıcacık neşe, insanları anlama yeteneğin, merakın ve güçlü duruşun gerçekten hayranlık verici. Kırmızı örümcek zambağının narin ama unutulmaz güzelliği gibi, bulunduğun her ortamda iz bırakıyorsun.
+                    </p>
+                    <p>
+                        O stetoskop boynuna takıldığında ve hekimlik önlüğünü giydiğinde, dokunduğun her hayata şifa olacağından en ufak bir şüphem yok. Emeklerinin, uykusuz gecelerinin ve hayallerinin en güzel şekilde karşılık bulacağı muazzam bir gelecek seni bekliyor.
+                    </p>
+                    <p>
+                        Yeni yaşında tavuk pilav keyfin, bitmeyen Discord sohbetlerimiz ve kışın o huzurlu serinliği her zaman seninle olsun. Tüm dileklerinin bir bir gerçekleştiği, kahkahalarının eksilmediği ve her gününün bir öncekinden daha parlak geçtiği bir yaş diliyorum.
+                    </p>
+                    <p style="font-weight: 600; font-size: 1.2rem; color: #5c0f1f;">
+                        İyi ki doğdun, iyi ki varsın Nida! Doğum günün kutlu olsun! ✨
+                    </p>
+                    <div class="mektup-imza">Sevgiyle... 🤍</div>
+                </div>
+            </div>
+
+            <!-- Müzik Kutusu & Plak Çalar -->
+            <div class="muzik-kutusu" id="muzik">
+                <h2 style="font-family: 'Playfair Display', serif; color: var(--altin);">Favori Şarkın Eşliğinde...</h2>
+                
+                <div class="plak-alani">
+                    <div class="vinil-plak" id="vinil-plak">
+                        <div class="plak-gobek">🎵</div>
+                    </div>
+                </div>
+
+                <div class="ses-dalgalari" id="ses-dalgalari">
+                    <div class="dalga-cubuk"></div>
+                    <div class="dalga-cubuk"></div>
+                    <div class="dalga-cubuk"></div>
+                    <div class="dalga-cubuk"></div>
+                    <div class="dalga-cubuk"></div>
+                </div>
+
+                <div class="sarki-bilgi">
+                    <h4>K3NT4! - i cant let you go</h4>
+                    <p>Bu özel anlara eşlik eden melodi</p>
+                </div>
+
+                <!-- HTML5 Audio Çalar -->
+                <audio id="ana-ses-oynatici" preload="auto">
+                    <!-- Kullanıcı kendi mp3 dosyasını 'sarki.mp3' ismiyle koyabilir -->
+                    <source src="sarki.mp3" type="audio/mpeg">
+                    <source src="sarki_dosyasi_varsa.mp3" type="audio/mpeg">
+                </audio>
+
+                <div class="muzik-butonlari">
+                    <button class="btn-oynat" id="btn-oynat" onclick="muzikCalDurdur()" title="Çal / Durdur">
+                        ▶
+                    </button>
+                    <a href="https://open.spotify.com/search/K3NT4!%20i%20cant%20let%20you%20go" target="_blank" rel="noopener noreferrer" class="btn-harici-link">
+                        <span>🟢 Spotify'da Dinle</span>
+                    </a>
+                    <a href="https://www.youtube.com/results?search_query=K3NT4!+i+cant+let+you+go" target="_blank" rel="noopener noreferrer" class="btn-harici-link">
+                        <span>🔴 YouTube'da Dinle</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>Tasarım Estetiği: Bordo & Kış • Nida için sevgiyle <span class="kalp">❤️</span> hazırlandı.</p>
+            <p style="font-size: 0.8rem; margin-top: 8px; opacity: 0.6;">27 Kasım • Nice Mutlu Yaşlara!</p>
+        </footer>
+
+    </div>
+
+    <!-- Hızlı Ses Açma/Kısma Butonu -->
+    <button class="floating-audio-ctrl" id="floating-audio" onclick="muzikCalDurdur()" title="Müziği Başlat / Durdur">
+        🎵
+    </button>
+
+    <!-- JavaScript Kodları -->
+    <script>
+        /* ==========================================================
+           1. CANVAS PARTICLE ENGINE (KAR TANELERİ & BORDO ZAMBAK YAPRAKLARI)
+           ========================================================== */
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let particles = [];
+        const particleCount = 65;
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * -canvas.height;
+                // %65 Kar Tanesi, %35 Kırmızı Örümcek Zambağı Taç Yaprağı
+                this.type = Math.random() > 0.35 ? 'snow' : 'petal';
+                this.size = this.type === 'snow' ? (Math.random() * 3 + 1.2) : (Math.random() * 8 + 6);
+                this.speedY = this.type === 'snow' ? (Math.random() * 1.2 + 0.6) : (Math.random() * 1.6 + 0.8);
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.angle = Math.random() * Math.PI * 2;
+                this.spin = (Math.random() - 0.5) * 0.03;
+                this.opacity = Math.random() * 0.6 + 0.3;
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += Math.sin(this.angle) * 0.7 + this.speedX;
+                this.angle += this.spin;
+
+                if (this.y > canvas.height + 20 || this.x < -30 || this.x > canvas.width + 30) {
+                    this.reset();
+                    this.y = -10;
+                }
+            }
+
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.angle);
+                ctx.globalAlpha = this.opacity;
+
+                if (this.type === 'snow') {
+                    // Kar tanesi (Parıltılı beyaz/altın daire)
+                    ctx.beginPath();
+                    ctx.arc(0, 0, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = 'rgba(255, 255, 255, 0.8)';
+                    ctx.fill();
+                } else {
+                    // Kırmızı Örümcek Zambağı Yaprağı (Bordo / Al kavisli taç yaprak)
+                    ctx.beginPath();
+                    ctx.moveTo(0, 0);
+                    ctx.quadraticCurveTo(this.size * 0.8, -this.size * 0.5, 0, -this.size * 1.8);
+                    ctx.quadraticCurveTo(-this.size * 0.8, -this.size * 0.5, 0, 0);
+                    ctx.fillStyle = '#b31b38';
+                    ctx.shadowBlur = 6;
+                    ctx.shadowColor = '#d91b42';
+                    ctx.fill();
+                }
+
+                ctx.restore();
+            }
+        }
+
+        for (let i = 0; i < particleCount; i++) {
+            const p = new Particle();
+            p.y = Math.random() * canvas.height; // Başlangıçta ekrana dağıt
+            particles.push(p);
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+
+        /* ==========================================================
+           2. CANLI ZAMAN SAYAÇLARI
+           ========================================================== */
+        // 31 Ağustos başlangıç tarihi (Tanışma / başlangıç anı)
+        // Yıl bilgisi varsayılan olarak yakın bir geçmişe ayarlanmıştır, ihtiyaca göre değiştirilebilir
+        const baslangicTarihi = new Date('2023-08-31T00:00:00');
+
+        function sayaclariGuncelle() {
+            const simdi = new Date();
+
+            // 1. "31 Ağustos'tan bugüne" geçen süre hesabı
+            let gecenMs = simdi - baslangicTarihi;
+            if (gecenMs < 0) gecenMs = 0;
+
+            const gecenGun = Math.floor(gecenMs / (1000 * 60 * 60 * 24));
+            const gecenSaat = Math.floor((gecenMs / (1000 * 60 * 60)) % 24);
+            const gecenDakika = Math.floor((gecenMs / (1000 * 60)) % 60);
+            const gecenSaniye = Math.floor((gecenMs / 1000) % 60);
+
+            document.getElementById('gecen-gun').textContent = gecenGun;
+            document.getElementById('gecen-saat').textContent = String(gecenSaat).padStart(2, '0');
+            document.getElementById('gecen-dakika').textContent = String(gecenDakika).padStart(2, '0');
+            document.getElementById('gecen-saniye').textContent = String(gecenSaniye).padStart(2, '0');
+
+            // 2. "27 Kasım Doğum Günü" geri sayım hesabı
+            const mevcutYil = simdi.getFullYear();
+            let hedefDogumGunu = new Date(mevcutYil, 10, 27, 0, 0, 0); // 10 = Kasım (0-indexed)
+
+            // Eğer bu seneki 27 Kasım geçtiyse sonraki seneye ayarla
+            if (simdi > new Date(mevcutYil, 10, 27, 23, 59, 59)) {
+                hedefDogumGunu = new Date(mevcutYil + 1, 10, 27, 0, 0, 0);
+            }
+
+            // Bugün 27 Kasım mı?
+            if (simdi.getMonth() === 10 && simdi.getDate() === 27) {
+                document.getElementById('dogum-gunu-durum').textContent = "🎉 BUGÜN SENİN DOĞUM GÜNÜN! İYİ Kİ DOĞDUN! 🎉";
+                document.getElementById('kalan-gun').textContent = "0";
+                document.getElementById('kalan-saat').textContent = "00";
+                document.getElementById('kalan-dakika').textContent = "00";
+                document.getElementById('kalan-saniye').textContent = "00";
+            } else {
+                const kalanMs = hedefDogumGunu - simdi;
+                const kalanGun = Math.floor(kalanMs / (1000 * 60 * 60 * 24));
+                const kalanSaat = Math.floor((kalanMs / (1000 * 60 * 60)) % 24);
+                const kalanDakika = Math.floor((kalanMs / (1000 * 60)) % 60);
+                const kalanSaniye = Math.floor((kalanMs / 1000) % 60);
+
+                document.getElementById('kalan-gun').textContent = kalanGun;
+                document.getElementById('kalan-saat').textContent = String(kalanSaat).padStart(2, '0');
+                document.getElementById('kalan-dakika').textContent = String(kalanDakika).padStart(2, '0');
+                document.getElementById('kalan-saniye').textContent = String(kalanSaniye).padStart(2, '0');
+            }
+        }
+
+        setInterval(sayaclariGuncelle, 1000);
+        sayaclariGuncelle();
+
+
+        /* ==========================================================
+           WEB AUDIO API (MİNİMAL SİHİRLİ SES EFEKTLERİ)
+           Harici mp3 dosyası gerektirmeden tarayıcıda melodi üretir
+           ========================================================== */
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function getAudioContext() {
+            if (!audioCtx) {
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Muma üflendiğinde parıltılı çan sesi (Twinkle chime)
+        function sihirliSesCal() {
+            try {
+                const ctx = getAudioContext();
+                const notalar = [523.25, 659.25, 783.99, 1046.50, 1318.51]; // C5, E5, G5, C6, E6
+                notalar.forEach((freq, index) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, ctx.currentTime + index * 0.08);
+                    
+                    gain.gain.setValueAtTime(0, ctx.currentTime + index * 0.08);
+                    gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + index * 0.08 + 0.02);
+                    gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + index * 0.08 + 0.8);
+                    
+                    osc.connect(gain);
+                    gain.connect(ctx.destination);
+                    
+                    osc.start(ctx.currentTime + index * 0.08);
+                    osc.stop(ctx.currentTime + index * 0.08 + 0.85);
+                });
+            } catch (e) {
+                console.log("AudioContext hatası:", e);
+            }
+        }
+
+        /* ==========================================================
+           3. İNTERAKTİF PASTA, MUM ÜFLEME & KONFETİ
+           ========================================================== */
+        let mumSonuk = false;
+
+        function mumuUfle() {
+            const alev = document.getElementById('mum-alevi');
+            const duman = document.getElementById('mum-dumani');
+            const mesaj = document.getElementById('pasta-mesaj');
+
+            if (!mumSonuk) {
+                // Mum sönüyor
+                alev.classList.add('sondu');
+                duman.classList.add('tutuyor');
+                mesaj.innerHTML = "✨ <strong>Dileğin gökyüzüne ulaştı Nida!</strong> Tüm hayallerin gerçek olsun... ✨";
+                mesaj.style.color = "#f6e29c";
+                mumSonuk = true;
+
+                // Sihirli çan sesi çal
+                sihirliSesCal();
+
+                // Konfeti patlatma (Altın & Bordo tonları)
+                if (typeof confetti === 'function') {
+                    // İlk patlama
+                    confetti({
+                        particleCount: 120,
+                        spread: 80,
+                        origin: { y: 0.65 },
+                        colors: ['#d4af37', '#f6e29c', '#a31c3b', '#ffffff', '#5c0f1f']
+                    });
+
+                    // Yanlardan süzülen konfetiler
+                    setTimeout(() => {
+                        confetti({
+                            particleCount: 60,
+                            angle: 60,
+                            spread: 55,
+                            origin: { x: 0 },
+                            colors: ['#d4af37', '#d91b42', '#ffffff']
+                        });
+                        confetti({
+                            particleCount: 60,
+                            angle: 120,
+                            spread: 55,
+                            origin: { x: 1 },
+                            colors: ['#d4af37', '#d91b42', '#ffffff']
+                        });
+                    }, 350);
+                }
+            } else {
+                // Tekrar yak
+                alev.classList.remove('sondu');
+                duman.classList.remove('tutuyor');
+                mesaj.innerHTML = "🕯️ Mum tekrar yandı! Yeniden bir dilek tutabilirsin.";
+                mesaj.style.color = "var(--altin-parlak)";
+                mumSonuk = false;
+            }
+        }
+
+
+        /* ==========================================================
+           4. 3D MÜHÜRLÜ ZARF & MEKTUP AÇILMA MEKANİZMASI
+           ========================================================== */
+        let zarfAcildi = false;
+
+        function zarfiAc() {
+            const zarf = document.getElementById('zarf');
+            const mektupKagit = document.getElementById('mektup-kagit');
+
+            if (!zarfAcildi) {
+                zarf.classList.add('acik');
+                zarfAcildi = true;
+
+                // Zarf açıldıktan sonra detaylı mektubu göster ve yumuşakça kaydır
+                setTimeout(() => {
+                    mektupKagit.classList.add('gorunur');
+                    mektupKagit.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 600);
+
+                // Hafif kutlama konfetisi
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 40,
+                        spread: 60,
+                        origin: { y: 0.8 },
+                        colors: ['#d4af37', '#ffffff']
+                    });
+                }
+            }
+        }
+
+
+        /* ==========================================================
+           5. MÜZİK ÇALAR & VİNİL PLAK KONTROLÜ
+           ========================================================== */
+        const sesOynatici = document.getElementById('ana-ses-oynatici');
+        const btnOynat = document.getElementById('btn-oynat');
+        const vinilPlak = document.getElementById('vinil-plak');
+        const sesDalgalari = document.getElementById('ses-dalgalari');
+        const floatingAudio = document.getElementById('floating-audio');
+        let caliyorMu = false;
+
+        function muzikCalDurdur() {
+            if (!caliyorMu) {
+                // Oynatmayı dene
+                sesOynatici.play().then(() => {
+                    durumuOynatiliyorYap();
+                }).catch((hata) => {
+                    console.log("Ses dosyası doğrudan bulunamadı veya tarayıcı izin vermedi:", hata);
+                    // Ses dosyası olmasa bile estetik deneyim için vinil ve animasyonları çalıştır
+                    durumuOynatiliyorYap();
+                });
+            } else {
+                sesOynatici.pause();
+                durumuDurdurulduYap();
+            }
+        }
+
+        function durumuOynatiliyorYap() {
+            caliyorMu = true;
+            btnOynat.textContent = '⏸';
+            vinilPlak.classList.add('caliyor');
+            sesDalgalari.classList.add('caliyor');
+            floatingAudio.textContent = '🔊';
+            floatingAudio.style.borderColor = 'var(--altin-parlak)';
+        }
+
+        function durumuDurdurulduYap() {
+            caliyorMu = false;
+            btnOynat.textContent = '▶';
+            vinilPlak.classList.remove('caliyor');
+            sesDalgalari.classList.remove('caliyor');
+            floatingAudio.textContent = '🎵';
+            floatingAudio.style.borderColor = 'var(--altin)';
+        }
+
+        sesOynatici.addEventListener('ended', durumuDurdurulduYap);
+
+        /* ==========================================================
+           6. POLAROID FOTOĞRAF YÜKLEME VE YEREL HAFIZA (LOCALSTORAGE)
+           ========================================================== */
+        let seciliPolaroidIndex = 1;
+
+        function polaroidTiklandi(index) {
+            seciliPolaroidIndex = index;
+            document.getElementById('polaroid-file-input').click();
+        }
+
+        function dosyaSecildi(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    const dataUrl = evt.target.result;
+                    polaroidGuncelle(seciliPolaroidIndex, dataUrl);
+                    try {
+                        localStorage.setItem('nida_polaroid_' + seciliPolaroidIndex, dataUrl);
+                    } catch(err) {
+                        console.warn("Görsel localStorage için biraz büyük olabilir:", err);
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+            e.target.value = '';
+        }
+
+        function polaroidGuncelle(index, url) {
+            const kutu = document.getElementById('polaroid-resim-' + index);
+            if (kutu) {
+                kutu.innerHTML = `
+                    <img src="${url}" alt="Özel Anı ${index}">
+                    <div class="polaroid-overlay-btn">
+                        <span>📷</span>
+                        <span>Fotoğrafı Değiştir</span>
+                    </div>
+                `;
+            }
+        }
+
+        // Sayfa açıldığında kayıtlı fotoğrafları geri yükle
+        window.addEventListener('DOMContentLoaded', () => {
+            for (let i = 1; i <= 4; i++) {
+                const kayitliFoto = localStorage.getItem('nida_polaroid_' + i);
+                if (kayitliFoto) {
+                    polaroidGuncelle(i, kayitliFoto);
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
